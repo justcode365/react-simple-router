@@ -30,14 +30,36 @@ export default class Router extends Component {
     // 阻止页面跳转刷新
     e.preventDefault()
     const { pathname } = e.target
+    console.warn(pathname)
+
     this.setState({ route: pathname })
     // 改变 地址
     window.history.pushState({ pathname }, '', pathname)
   }
 
+  matchRouter = route => {
+    console.log(routeConfig)
+    const C = routeConfig[route]
+
+    if (C) {
+      return <C />
+    } else {
+      for (const param of routeConfig.params) {
+        const match = route.match(new RegExp(param.replace(/:[^\s/]+/g, '([\\w-]+)')))
+        if (match) {
+          const D = routeConfig[param]
+          const value = match[1]
+          const key = param.split(':')[1].split('/')[0]
+          return <D params={{ [key]: value }} />
+        } else {
+          throw new Error('路由有错误')
+        }
+      }
+    }
+  }
+
   render() {
     const { route } = this.state
-    const C = routeConfig[route]
     return (
       <Provider value={{ router: this.handleClick }}>
         <div>
@@ -52,8 +74,12 @@ export default class Router extends Component {
           <a href="/async" onClick={this.handleClick}>
             async
           </a>
+          <br />
+          <a href="/@someone" onClick={this.handleClick}>
+            someone
+          </a>
           <hr />
-          <C />
+          {this.matchRouter(route)}
         </div>
       </Provider>
     )
