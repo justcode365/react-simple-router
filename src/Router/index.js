@@ -1,4 +1,5 @@
 import React, { Component, createContext } from 'react'
+import Header from './Header'
 import routeConfig from './route'
 
 const store = {
@@ -28,7 +29,7 @@ export default class Router extends Component {
 
   linkClick = e => {
     e.preventDefault() // 阻止页面跳转刷新
-    const { pathname } = e.target
+    const { pathname } = e.currentTarget //事件冒泡
     this.redirect(pathname)
   }
 
@@ -38,7 +39,6 @@ export default class Router extends Component {
   }
 
   matchRouter = route => {
-    console.log(routeConfig)
     const C = routeConfig[route]
 
     if (C) {
@@ -62,25 +62,8 @@ export default class Router extends Component {
     const { route } = this.state
     return (
       <Provider value={{ linkClick: this.linkClick, redirect: this.redirect }}>
-        <div>
-          <a href="/home" onClick={this.linkClick}>
-            Home
-          </a>
-          <br />
-          <a href="/one" onClick={this.linkClick}>
-            One
-          </a>
-          <br />
-          <a href="/async" onClick={this.linkClick}>
-            async
-          </a>
-          <br />
-          <a href="/@someone" onClick={this.linkClick}>
-            someone
-          </a>
-          <hr />
-          {this.matchRouter(route)}
-        </div>
+        <Header />
+        {this.matchRouter(route)}
       </Provider>
     )
   }

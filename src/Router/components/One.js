@@ -7,11 +7,10 @@ export default () => {
       One
       <Consumer>
         {context => {
-          console.log(context)
           return (
             <div>
               <a href="/" onClick={context.linkClick}>
-                HOme
+                Home
               </a>
             </div>
           )
