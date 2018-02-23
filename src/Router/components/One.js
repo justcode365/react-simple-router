@@ -10,7 +10,7 @@ export default () => {
           console.log(context)
           return (
             <div>
-              <a href="/" onClick={context.router}>
+              <a href="/" onClick={context.linkClick}>
                 HOme
               </a>
             </div>

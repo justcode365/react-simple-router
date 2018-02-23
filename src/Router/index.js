@@ -26,15 +26,15 @@ export default class Router extends Component {
     }
   }
 
-  handleClick = e => {
-    // 阻止页面跳转刷新
-    e.preventDefault()
+  linkClick = e => {
+    e.preventDefault() // 阻止页面跳转刷新
     const { pathname } = e.target
-    console.warn(pathname)
+    this.redirect(pathname)
+  }
 
+  redirect = pathname => {
     this.setState({ route: pathname })
-    // 改变 地址
-    window.history.pushState({ pathname }, '', pathname)
+    window.history.pushState({ pathname }, '', pathname) // 改变 地址
   }
 
   matchRouter = route => {
@@ -61,21 +61,21 @@ export default class Router extends Component {
   render() {
     const { route } = this.state
     return (
-      <Provider value={{ router: this.handleClick }}>
+      <Provider value={{ linkClick: this.linkClick, redirect: this.redirect }}>
         <div>
-          <a href="/home" onClick={this.handleClick}>
+          <a href="/home" onClick={this.linkClick}>
             Home
           </a>
           <br />
-          <a href="/one" onClick={this.handleClick}>
+          <a href="/one" onClick={this.linkClick}>
             One
           </a>
           <br />
-          <a href="/async" onClick={this.handleClick}>
+          <a href="/async" onClick={this.linkClick}>
             async
           </a>
           <br />
-          <a href="/@someone" onClick={this.handleClick}>
+          <a href="/@someone" onClick={this.linkClick}>
             someone
           </a>
           <hr />
