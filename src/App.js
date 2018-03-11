@@ -79,9 +79,9 @@ const Topics = ({ match }) => (
   </div>
 )
 
-const Topic1 = ({ match }) => <div>Topic1</div>
+const Topic1 = ({ match }) => <div>{match.params.id}</div>
 
-const Topic2 = ({ match }) => <div>Topic2</div>
+const Topic2 = ({ match }) => <div>{JSON.stringify(match.params, null, '  ')}</div>
 
 const Other = ({ match }) => <h3>Please select a topic.</h3>
 
