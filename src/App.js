@@ -1,5 +1,13 @@
 import React from 'react'
-import { Router, Route, Link, Switch, Redirect } from './package/react-simple-router'
+import asyncload from './package/react-async-load'
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect
+} from './package/react-simple-router'
 
 export default () => (
   <Router>
@@ -14,6 +22,9 @@ export default () => (
         <li>
           <Link to="/topics">Topics</Link>
         </li>
+        <li>
+          <Link to="/async">Async</Link>
+        </li>
       </ul>
       <hr />
 
@@ -21,6 +32,7 @@ export default () => (
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/topics" component={Topics} />
+        <Route path="/async" component={asyncload(() => import('./components/Async.js'))} />
         <Route component={NotFound} />
       </Switch>
     </div>

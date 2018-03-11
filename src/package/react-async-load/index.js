@@ -16,3 +16,5 @@ function asyncload(importComponent) {
     }
   }
 }
+
+export default asyncload
