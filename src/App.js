@@ -1,7 +1,7 @@
 import React from 'react'
-import { Router, Route, Link } from './package/react-simple-router'
+import { Router, Route, Link, Switch, Redirect } from './package/react-simple-router'
 
-const BasicExample = () => (
+export default () => (
   <Router>
     <div>
       <ul>
@@ -15,12 +15,14 @@ const BasicExample = () => (
           <Link to="/topics">Topics</Link>
         </li>
       </ul>
-
       <hr />
 
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/topics" component={Topics} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/topics" component={Topics} />
+        <Route component={NotFound} />
+      </Switch>
     </div>
   </Router>
 )
@@ -31,11 +33,18 @@ const Home = () => (
   </div>
 )
 
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
-)
+class About extends React.Component {
+  state = { redirect: false }
+  render() {
+    if (this.state.redirect) return <Redirect to="/" />
+    return (
+      <div>
+        <h2>About</h2>
+        <button onClick={() => this.setState({ redirect: true })}>Back Home </button>
+      </div>
+    )
+  }
+}
 
 const Topics = ({ match }) => (
   <div>
@@ -81,4 +90,4 @@ const Other = ({ match }) => (
   </h3>
 )
 
-export default BasicExample
+const NotFound = () => <h1>Not Found</h1>
