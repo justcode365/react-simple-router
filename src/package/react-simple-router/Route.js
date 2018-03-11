@@ -3,33 +3,33 @@ import { Consumer } from './Router'
 import pathToRegexp from 'path-to-regexp'
 
 class Route extends Component {
-  match = (path, url) => {
-    return true
-  }
+  match = () => {
+    const { path, router, component, exact = false } = this.props
 
-  paramsMatch = (path, url) => {
     let keys = []
-    let re = pathToRegexp(path, keys)
-    const match = re.exec(url)
+    const re = pathToRegexp(path, keys, { end: exact })
 
-    if (!match) return {}
+    const result = re.exec(router)
+    if (!result) return false
+    if (result.length === 1) return {}
 
-    const [_url, ...values] = match
+    const [_url, ...values] = result
 
-    console.log(keys, values)
-    return keys.reduce((temp, key, index) => {
+    const params = keys.reduce((temp, key, index) => {
       temp[key.name] = values[index]
       return temp
     }, {})
+
+    return params
   }
 
   render() {
-    const { path, component, url } = this.props
-    const params = this.paramsMatch(path, url)
-    const props = { match: { path, url, params } }
+    const { component, path, router } = this.props
+    const params = this.match()
+    const match = { path, url: router, params }
 
-    return this.match(path, url) ? React.createElement(component, props) : null
+    return params ? React.createElement(component, { match }) : null
   }
 }
 
-export default props => <Consumer>{({ router }) => <Route {...props} url={router} />}</Consumer>
+export default props => <Consumer>{({ router }) => <Route {...props} router={router} />}</Consumer>

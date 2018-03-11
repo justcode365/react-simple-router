@@ -12,7 +12,7 @@ const BasicExample = () => (
           <Link to="/about">About</Link>
         </li>
         <li>
-          <Link to="/topics">Topics</Link>
+          <Link to="/topics/sdf">Topics</Link>
         </li>
       </ul>
 
@@ -20,7 +20,7 @@ const BasicExample = () => (
 
       <Route exact path="/" component={Home} />
       <Route path="/about" component={About} />
-      <Route path="/topics" component={Topics} />
+      <Route path="/topics/:id" component={Topic} />
     </div>
   </Router>
 )
@@ -31,14 +31,19 @@ const Home = () => (
   </div>
 )
 
-const About = props => {
-  console.log(props)
-  return (
-    <div>
-      <h2>About</h2>
-    </div>
-  )
-}
+const About = () => (
+  <div>
+    <h2>About</h2>
+  </div>
+)
+
+const Topic = ({ match }) => (
+  <div>
+    <h1>
+      <pre>{JSON.stringify(match, null, ' ')}</pre>
+    </h1>
+  </div>
+)
 
 const Topics = ({ match }) => (
   <div>
@@ -59,15 +64,5 @@ const Topics = ({ match }) => (
     {/* <Route exact path={match.url} render={() => <h3>Please select a topic.</h3>} /> */}
   </div>
 )
-
-const Topic = ({ match }) => {
-  console.log(match)
-  return (
-    <div>
-      1
-      {/* <h3>{match.params.topicId}</h3> */}
-    </div>
-  )
-}
 
 export default BasicExample
