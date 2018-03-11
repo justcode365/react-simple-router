@@ -12,7 +12,7 @@ const BasicExample = () => (
           <Link to="/about">About</Link>
         </li>
         <li>
-          <Link to="/topics/sdf">Topics</Link>
+          <Link to="/topics">Topics</Link>
         </li>
       </ul>
 
@@ -20,7 +20,7 @@ const BasicExample = () => (
 
       <Route exact path="/" component={Home} />
       <Route path="/about" component={About} />
-      <Route path="/topics/:id" component={Topic} />
+      <Route path="/topics" component={Topics} />
     </div>
   </Router>
 )
@@ -37,32 +37,48 @@ const About = () => (
   </div>
 )
 
-const Topic = ({ match }) => (
-  <div>
-    <h1>
-      <pre>{JSON.stringify(match, null, ' ')}</pre>
-    </h1>
-  </div>
-)
-
 const Topics = ({ match }) => (
   <div>
+    <pre>{JSON.stringify(match, null, '  ')}</pre>
+
     <h2>Topics</h2>
     <ul>
       <li>
-        <Link to={`/topics/rendering`}>Rendering with React</Link>
+        <Link to={`${match.url}/rendering`}>Rendering with React</Link>
       </li>
       <li>
-        <Link to={`/topics/components`}>Components</Link>
+        <Link to={`${match.url}/components`}>Components</Link>
       </li>
       <li>
-        <Link to={`/topics/props-v-state`}>Props v. State</Link>
+        <Link to={`${match.url}/props-v-state/helloworld`}>Props v. State</Link>
       </li>
     </ul>
 
-    <Route path={`/topics/:topicId`} component={Topic} />
-    {/* <Route exact path={match.url} render={() => <h3>Please select a topic.</h3>} /> */}
+    <Route exact path={`${match.url}/:id`} component={Topic1} />
+    <Route path={`${match.url}/:id/:title`} component={Topic2} />
+    <Route exact path={match.url} component={Other} />
   </div>
+)
+
+const Topic1 = ({ match }) => (
+  <div>
+    Topic1
+    <pre>{JSON.stringify(match, null, '  ')}</pre>
+  </div>
+)
+
+const Topic2 = ({ match }) => (
+  <div>
+    Topic2
+    <pre>{JSON.stringify(match, null, '  ')}</pre>
+  </div>
+)
+
+const Other = ({ match }) => (
+  <h3>
+    <pre>{JSON.stringify(match, null, '  ')}</pre>
+    Please select a topic.
+  </h3>
 )
 
 export default BasicExample

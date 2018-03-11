@@ -11,24 +11,22 @@ class Route extends Component {
 
     const result = re.exec(router)
     if (!result) return false
-    if (result.length === 1) return {}
 
-    const [_url, ...values] = result
+    const [url, ...values] = result
 
     const params = keys.reduce((temp, key, index) => {
       temp[key.name] = values[index]
       return temp
     }, {})
 
-    return params
+    return { params, url, path, isExact: exact }
   }
 
   render() {
-    const { component, path, router } = this.props
-    const params = this.match()
-    const match = { path, url: router, params }
+    const { component } = this.props
+    const match = this.match()
 
-    return params ? React.createElement(component, { match }) : null
+    return match ? React.createElement(component, { match }) : null
   }
 }
 
