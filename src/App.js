@@ -60,8 +60,6 @@ class About extends React.Component {
 
 const Topics = ({ match }) => (
   <div>
-    <pre>{JSON.stringify(match, null, '  ')}</pre>
-
     <h2>Topics</h2>
     <ul>
       <li>
@@ -81,25 +79,10 @@ const Topics = ({ match }) => (
   </div>
 )
 
-const Topic1 = ({ match }) => (
-  <div>
-    Topic1
-    <pre>{JSON.stringify(match, null, '  ')}</pre>
-  </div>
-)
+const Topic1 = ({ match }) => <div>Topic1</div>
 
-const Topic2 = ({ match }) => (
-  <div>
-    Topic2
-    <pre>{JSON.stringify(match, null, '  ')}</pre>
-  </div>
-)
+const Topic2 = ({ match }) => <div>Topic2</div>
 
-const Other = ({ match }) => (
-  <h3>
-    <pre>{JSON.stringify(match, null, '  ')}</pre>
-    Please select a topic.
-  </h3>
-)
+const Other = ({ match }) => <h3>Please select a topic.</h3>
 
 const NotFound = () => <h1>Not Found</h1>
