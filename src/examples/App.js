@@ -1,5 +1,5 @@
 import React from 'react'
-import asyncload from './package/react-async-load'
+import asyncload from '../package/react-async-load'
 
 import {
   BrowserRouter as Router,
@@ -7,7 +7,7 @@ import {
   Link,
   Switch,
   Redirect
-} from './package/react-simple-router'
+} from '../package/react-simple-router'
 
 export default () => (
   <Router>
@@ -33,7 +33,7 @@ export default () => (
         <Route path="/about" component={About} />
         <Route path="/topics" component={Topics} />
         <Route path="/async" component={asyncload(() => import('./components/Async.js'))} />
-        <Route component={NotFound} />
+        <Route render={() => <h1>Not Found</h1>} />
       </Switch>
     </div>
   </Router>
@@ -84,5 +84,3 @@ const Topic1 = ({ match }) => <div>{match.params.id}</div>
 const Topic2 = ({ match }) => <div>{JSON.stringify(match.params, null, '  ')}</div>
 
 const Other = ({ match }) => <h3>Please select a topic.</h3>
-
-const NotFound = () => <h1>Not Found</h1>

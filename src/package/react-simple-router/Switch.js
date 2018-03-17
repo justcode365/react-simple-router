@@ -1,6 +1,6 @@
 import React from 'react'
 import { Consumer } from './Router'
-import matchPath from './utils/match'
+import matchPath from './matchPath'
 
 class Switch extends React.Component {
   render() {

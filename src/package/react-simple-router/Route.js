@@ -1,13 +1,21 @@
+// @flow
+
 import React, { Component } from 'react'
 import { Consumer } from './Router'
-import matchPath from './utils/match'
+import matchPath from './matchPath'
 
-class Route extends Component {
+type Props = {
+  render: () => void
+}
+
+class Route extends Component<Props> {
   render() {
-    const { component, path, router, exact } = this.props
+    const { component, path, router, exact, render } = this.props
     const match = matchPath(path, router, exact)
+    const props = { match }
 
-    return match ? React.createElement(component, { match }) : null
+    if (render) return match ? render(props) : null
+    return match ? React.createElement(component, props) : null
   }
 }
 
